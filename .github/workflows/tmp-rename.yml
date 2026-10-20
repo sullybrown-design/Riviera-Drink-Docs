@@ -1,0 +1,20 @@
+name: Temp rename index
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename index file
+        run: |
+          git config user.name "sullybrown-design"
+          git config user.email "sullybrown-design@users.noreply.github.com"
+          git mv index-inlined.html index.html
+          git commit -m "Footnote removal and pour fixes"
+          git push

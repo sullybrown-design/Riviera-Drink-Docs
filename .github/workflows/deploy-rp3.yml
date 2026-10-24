@@ -1,0 +1,22 @@
+name: deploy-rp3
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip build and commit
+        run: |
+          unzip -o site-rp3.zip -d .
+          rm site-rp3.zip
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Deploy rp3 controlled update build" || echo "no changes to commit"
+          rm -f .github/workflows/deploy-rp3.yml
+          git add -A
+          git commit -m "Remove one-off deploy workflow" || echo "nothing to remove"
+          git push

@@ -1,0 +1,25 @@
+name: deploy-rp5
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack site and commit
+        run: |
+          unzip -o site-rp5.zip -d .
+          rm -f site-rp5.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Site build 20261024-rp5" || echo "no changes"
+          git push
+      - name: Remove this one-off workflow
+        run: |
+          rm -f .github/workflows/deploy-rp5.yml
+          git add -A
+          git commit -m "Remove one-off deploy workflow" || echo "nothing to remove"
+          git push

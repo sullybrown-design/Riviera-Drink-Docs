@@ -1,0 +1,19 @@
+name: Deploy rp8
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy rp8
+        run: |
+          unzip -o site-rp8.zip
+          rm site-rp8.zip .github/workflows/deploy-rp8.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp8: Spadoni Fernet amaro photo fix (build 20261024-rp8)"
+          git push

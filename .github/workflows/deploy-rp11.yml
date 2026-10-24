@@ -1,0 +1,19 @@
+name: Deploy rp11
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip and deploy rp11
+        run: |
+          unzip -o site-rp11.zip
+          rm -f site-rp11.zip .github/workflows/deploy-rp11.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp11: pink text fully removed incl. back pill and home arrows (build 20261024-rp11)"
+          git push

@@ -1,0 +1,19 @@
+name: Deploy rp9
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy rp9
+        run: |
+          unzip -o site-rp9.zip
+          rm site-rp9.zip .github/workflows/deploy-rp9.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp9: Spadoni credit fix + pink/purple palette (build 20261024-rp9)"
+          git push

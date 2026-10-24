@@ -1,0 +1,11 @@
+name: Publish RP1
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: unzip -o site-rp1.zip && rm site-rp1.zip && git add -A && git -c user.email=pages@github.com -c user.name="Pages Build" commit -m "Reliability pass: external photo assets + service worker + app fixes" && git push && rm .github/workflows/publish-rp1.yml && git add -A && git -c user.email=pages@github.com -c user.name="Pages Build" commit -m "Remove one-off publish workflow" && git push

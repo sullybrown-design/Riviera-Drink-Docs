@@ -1,0 +1,20 @@
+name: Deploy rp13
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy rp13
+        run: |
+          unzip -o site-rp13.zip
+          rm site-rp13.zip
+          rm .github/workflows/deploy-rp13.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp13: bottle price on wine cards (build 20261025-rp13)"
+          git push

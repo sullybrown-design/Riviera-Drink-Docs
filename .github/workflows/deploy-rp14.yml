@@ -1,0 +1,22 @@
+name: deploy-rp14
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip site and commit
+        run: |
+          unzip -o site-rp14.zip
+          rm site-rp14.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp14 - 2026-11-01 wine list update"
+          git push
+          git rm -q .github/workflows/deploy-rp14.yml
+          git commit -m "Remove one-off deploy workflow"
+          git push

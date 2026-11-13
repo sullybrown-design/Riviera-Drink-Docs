@@ -1,0 +1,25 @@
+name: Deploy rp17
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip site and remove zip and workflow
+        run: |
+          unzip -o site-dist-rp17.zip
+          rm site-dist-rp17.zip
+          rm .github/workflows/deploy-rp17.yml
+      - name: Commit and push deployed site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy rp17" || exit 0
+          git push

@@ -1,0 +1,20 @@
+name: deploy-rp22
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip and commit
+        run: |
+          unzip -o site-rp22.zip
+          rm site-rp22.zip
+          rm .github/workflows/deploy-rp22.yml
+          git config user.email "deploy@riviera.local"
+          git config user.name "Riviera deploy"
+          git add -A
+          git commit -m "Deploy rp22"
+          git push
